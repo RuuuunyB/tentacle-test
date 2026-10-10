@@ -146,7 +146,7 @@ button:focus-visible{outline:2px solid var(--pt);outline-offset:2px}
 <div id="toast" role="status"></div>
 
 <script>
-// 다국어 텍스트 데이터베이스
+// 다국어 텍스트 및 현지화된 추천 이름 데이터베이스
 const I18N = {
   ko: {
     bubble: "데려갈래?",
@@ -176,6 +176,12 @@ const I18N = {
       ["EI","모르는 사람들이 있는 커뮤니티에 내 반려 촉수를 자랑할 때:",[["먼저 적극적으로 사진을 올리고 대화를 주도한다","E"],["다른 사람들의 반응을 조용히 구경하며 즐긴다","I"],["활기찬 분위기 속에서 사람들과 어울린다","E"],["친한 몇몇 사람들과만 소소하게 이야기를 나눈다","I"]]],
       ["JP","예상치 못하게 촉수가 평소와 다른 컨디션을 보일 때:",[["당황하지 않고 매뉴얼대로 원인과 대책을 찾는다","J"],["일단 상황을 유연하게 지켜보며 맞춰준다","P"]]]
     ],
+    names: {
+      ISTJ:["두부","콩이","밤이"], ISFJ:["모찌","몽이","호두"], INFJ:["달이","루나","미오"], INTJ:["마루","로이","토리"],
+      ISTP:["쿠로","코코","하리"], ISFP:["푸딩","모카","젤리"], INFP:["솜이","구름","뭉이"], INTP:["루미","타타","보노"],
+      ESTP:["치즈","탄이","레오"], ESFP:["뽀삐","쿠키","망고"], ENFP:["몽글","사탕","레몬"], ENTP:["아몬드","푸푸","두리"],
+      ESTJ:["맥스","보배","도리"], ESFJ:["밤톨","까미","뽀미"], ENFJ:["소라","해랑","동이"], ENTJ:["레이","몰리","타이"]
+    },
     r: {
       ISTJ:{t:"정각에 문을 두두리는 근위 촉수",q:"약속 시간 3분 전, 이미 문 앞에 서 있음",d:"규칙적인 생활을 사랑하는 든든한 촉수예요. 밥때, 산책 시간, 취침 시간이 정확하고 한 번 약속하면 반드시 지켜요.",s:"시간 맞춰 깨워주기, 서랍 정리, 약 먹을 시간 알려주기"},
       ISFJ:{t:"포근하게 감싸주는 담요 촉수",q:"당신이 추워 보이면 이미 어깨에 걸쳐져 있음",d:"조용히 곁을 지키며 세심하게 챙기는 촉수예요. 당신의 컨디션 변화를 가장 먼저 알아채고 따뜻하게 몸을 말아줘요.",s:"등 토닥이기, 이불 덮어주기, 야식 몰래 챙겨두기"},
@@ -223,6 +229,12 @@ const I18N = {
       ["EI","When showing off your companion tentacle in a community:",[["Actively upload photos first and lead the conversation","E"],["Quietly enjoy watching other people's reactions","I"],["Mix and mingle with people in a lively atmosphere","E"],["Talk casually with just a few close friends","I"]]],
       ["JP","When the tentacle unexpectedly shows an unusual condition:",[["Calmly find the cause and countermeasure according to the manual","J"],["Quietly watch the situation flexibly and adapt","P"]]]
     ],
+    names: {
+      ISTJ:["Winston","Barnaby","Clive"], ISFJ:["Mochi","Pip","Buttons"], INFJ:["Luna","Mystic","Orion"], INTJ:["Nero","Atlas","Cipher"],
+      ISTP:["Spike","Bolt","Gizmo"], ISFP:["Coral","Mimi","Bubbles"], INFP:["Cloud","Echo","Zephyr"], INTP:["Pixel","Atom","Newton"],
+      ESTP:["Blaze","Dash","Zippy"], ESFP:["Coco","Sunny","Fizzie"], ENFP:["Spark","Skye","Brio"], ENTP:["Jinx","Riot","Prank"],
+      ESTJ:["Rex","Sterling","Major"], ESFJ:["Honey","Daisy","Peaches"], ENFJ:["Aura","Sol","Harmony"], ENTJ:["Caesar","Dominic","Titan"]
+    },
     r: {
       ISTJ:{t:"Punctual Guard Tentacle",q:"3 minutes before appointment time, already waiting at the door",d:"A reliable tentacle that loves routine. Feeding, walking, and sleeping schedules are strict and promises are always kept.",s:"Morning wake-up calls, drawer organization, reminding medicine times"},
       ISFJ:{t:"Cozy Blanket Tentacle",q:"If you look cold, it's already draped over your shoulders",d:"A quiet tentacle that watches closely by your side. It notices your condition changes first and wraps around you warmly.",s:"Back pats, blanket tucking, secret late-night snacks"},
@@ -270,6 +282,12 @@ const I18N = {
       ["EI","見知らぬ人がいるコミュニティに自分の触手を自慢する時：",[["自分から積極的に写真を投稿して会話を主導する","E"],["他の人たちの反応を静かに眺めて楽しむ","I"],["賑やかな雰囲気の中で人々と交流する","E"],["親しい数人とだけこっそり話す","I"]]],
       ["JP","予想外に触手のコンディションがいつもと違う時：",[["慌てずマニュアル通りに原因と対策を探す","J"],["まずは状況を柔軟に見守り、合わせてあげる","P"]]]
     ],
+    names: {
+      ISTJ:["ゲンタ","クロ","テツ"], ISFJ:["モモ","ポポ","アン"], INFJ:["ソラ","ルナ","ミミ"], INTJ:["リュウ","ゼロ","カイ"],
+      ISTP:["ジン","ソウル","テオ"], ISFP:["ルル","ハナ","ココ"], INFP:["ゆき","ぽん","むぎ"], INTP:["ラボ","ピコ","クルト"],
+      ESTP:["レックス","カイザー","バロン"], ESFP:["ぴょん","ちゃちゃ","もも"], ENFP:["ニコ","キキ","ポチ"], ENTP:["ギミック","トリック","キッド"],
+      ESTJ:["ガッチ","バン","ボス"], ESFJ:["くるみ","きなこ","あんこ"], ENFJ:["ひなた","あおい","みらい"], ENTJ:["キング","レオン","セサル"]
+    },
     r: {
       ISTJ:{t:"時間厳守の近衛触手",q:"約束の3分前、すでにドアの前にいる",d:"規則正しい生活を愛する頼もしい触手です。ご飯や散歩、就寝時間が正確で、一度した約束は必ず守ります。",s:"時間通りの起こし、引き出しの整理、薬の時間の通知"},
       ISFJ:{t:"包み込むブランケット触手",q:"寒そうにしていると、すでに肩に掛けられている",d:"静かにそばで見守り、細やかに気遣ってくれる触手です。あなたのコンディションの変化を真っ先に察知し、温かく包み込みます。",s:"背中トントン、布団かけ、こっそり夜食の準備"},
@@ -315,8 +333,14 @@ const I18N = {
       ["TF","当别人说“你把触手惯坏了”时：",[["反驳说按照标准和原则教育才是正确的","T"],["笑着说用自己的方式疼爱有什么不好的","F"],["权衡客观的养育数据和效率","T"],["温柔地回应，以免伤害对方的感情","F"]]],
       ["JP","改变触手鱼缸布局时的风格是：",[["提前画好草图，按顺序完美布置","J"],["先摆放看看，如果不满意就即兴修改","P"],["喜欢根据规则整齐排列的结构","J"],["根据当时的心情享受自由布局","P"]]],
       ["EI","在有陌生人的社区里向大家炫耀你的触手时：",[["主动积极地发照片并主导对话","E"],["静静地围观并享受其他人的反应","I"],["在热闹的氛围中与大家交流","E"],["只跟几个亲近的朋友小范围聊天","I"]]],
-      ["JP","当触手表现出意料之外的和平时不一样的状态时：",[["不慌不忙，按照手册寻找原因和对策","J"],["先灵活地观察情况并迎合它","P"]]]
+      ["JP","当触手表现出意料之外和平时不一样的状态时：",[["不慌不忙，按照手册寻找原因和对策","J"],["先灵活地观察情况并迎合它","P"]]]
     ],
+    names: {
+      ISTJ:["小严","阿福","铁柱"], ISFJ:["团团","糯米","豆包"], INFJ:["月儿","星璇","幽幽"], INTJ:["墨子","棋圣","司南"],
+      ISTP:["阿修","机灵","快手"], ISFP:["珊瑚","小粉","泡泡"], INFP:["云朵","棉花","小莫"], INTP:["学者","阿基","思远"],
+      ESTP:["闪电","疾风","小强"], ESFP:["跳跳","欢欢","乐乐"], ENFP:["百变","点子","小灵"], ENTP:["机智","百晓","阿福"],
+      ESTJ:["队长","威严","将军"], ESFJ:["暖暖","阿桃","贝贝"], ENFJ:["向阳","晨曦","暖阳"], ENTJ:["霸气","统帅","巅峰"]
+    },
     r: {
       ISTJ:{t:"准时敲门的近卫触手",q:"距离约定时间还有3分钟，已经在门前等候",d:"热爱规律生活的可靠触手。吃饭、散步、睡觉时间非常准确，一旦许下诺言就一定会遵守。",s:"按时叫醒、整理抽屉、提醒吃药时间"},
       ISFJ:{t:"温暖包裹的毛毯触手",q:"如果你看起来冷，它已经搭在你肩膀上了",d:"默默守候在身旁、细心照顾你的触手。它能最先察觉你身体状态的变化，并用温暖包裹你。",s:"拍背抚摸、盖被子、偷偷准备宵夜"},
@@ -325,7 +349,7 @@ const I18N = {
       ISTP:{t:"心灵手巧的万能整修触手",q:"话不多但动作极快",d:"虽然话少但在你需要时总会及时出现。坏掉的东西先摸摸看，修好之后才肯说一句话。",s:"组装与修理、开瓶盖、搬运重物"},
       ISFP:{t:"穿梭珊瑚间的感性艺术触手",q:"今天的颜色是柔和粉色",d:"感官细腻且自由奔放的触手。遇到晚霞、音乐、阳光等美丽瞬间时，会默默陪在旁边一起欣赏。",s:"画画、歌单策划、欣赏晚霞"},
       INFP:{t:"漂浮云端的梦想家水母触手",q:"想象力比现实更温馨",d:"内心世界广阔且情感细腻的触手。当你感到辛苦时，它会像萤火虫一样在身旁默默发光陪伴。",s:"写情感日记、看星星、一起深夜发呆"},
-      INTP:{t:"手拿烧瓶验证假设的研究触手",q:"为什么会这样，先做个实验再说",d:"好奇心永无止境的触手。你随口抛出的一个小问题就能让它研究一整夜，不过记得喂它吃饭。",s:"科普冷知识、解谜、制作古怪发明"},
+      INTP:{t:"手拿烧瓶验证假设的研究触手",q:"为什么会这样，先做个实验再说",d:"好奇心无止境的触手。你随口抛出的一个小问题就能让它研究一整夜，不过记得喂它吃饭。",s:"科普冷知识、解谜、制作古怪发明"},
       ESTP:{t:"踏浪前行的冲浪触手",q:"先做了再说，想那么多干嘛",d:"充满活力、行动敏捷的触手。散步就是跑步，玩耍就是冒险，绝对能让你的运动量大大增加。",s:"跑步搭子、转换心情、应对危机"},
       ESFP:{t:"聚光灯下起舞的派对触手",q:"一登场就瞬间炒热气氛",d:"无论到哪里都能成为焦点的可爱触手。把你的平凡小家变成每天都充满欢庆的小派对。",s:"舞蹈挑战、自拍摆姿势、派对主持"},
       ENFP:{t:"如烟花般绽放的创意触手",q:"宣布今天的全新梦想",d:"充满好奇心与热情的触手。一天能定五个计划，其中三个已经开始执行了。收尾工作得靠你帮忙。",s:"灵感库、啦啦队长、发掘新爱好"},
@@ -364,6 +388,12 @@ const I18N = {
       ["EI","在有陌生人的社區里向大家炫耀你的觸手時：",[["主動積極地發照片並主導對話","E"],["靜靜地圍觀並享受其他人的反應","I"],["在熱鬧的氛圍中與大家交流","E"],["只跟幾個親近的朋友小範圍聊天","I"]]],
       ["JP","當觸手表現出意料之外和平時不一樣的狀態時：",[["不慌不忙，按照手冊尋找原因和對策","J"],["先靈活地觀察情況並迎合它","P"]]]
     ],
+    names: {
+      ISTJ:["小嚴","阿福","鐵柱"], ISFJ:["團團","糯米","豆包"], INFJ:["月兒","星璇","幽幽"], INTJ:["墨子","棋聖","司南"],
+      ISTP:["阿修","機靈","快手"], ISFP:["珊瑚","小粉","泡泡"], INFP:["雲朵","棉花","小莫"], INTP:["學者","阿基","思遠"],
+      ESTP:["閃電","疾風","小強"], ESFP:["跳跳","歡歡","樂樂"], ENFP:["百變","點子","小靈"], ENTP:["機智","百曉","阿福"],
+      ESTJ:["隊長","威嚴","將軍"], ESFJ:["暖暖","阿桃","貝貝"], ENFJ:["向陽","晨曦","暖陽"], ENTJ:["霸氣","統帥","巔峰"]
+    },
     r: {
       ISTJ:{t:"準時敲門的近衛觸手",q:"距離約定時間還有3分鐘，已經在門前等候",d:"熱愛規律生活的可靠觸手。吃飯、散步、睡覺時間非常準確，一旦許下諾言就一定會遵守。",s:"按時叫醒、整理抽屜、提醒吃藥時間"},
       ISFJ:{t:"溫暖包裹的毛毯觸手",q:"如果你看起來冷，它已經搭在你肩膀上了",d:"默默守候在身旁、細心照顧你的觸手。它能最先察覺你身體狀態的變化，並用溫暖包裹你。",s:"拍背撫摸、蓋被子、偷偷準備宵夜"},
@@ -411,6 +441,12 @@ const I18N = {
       ["EI","Al presumir de tu tentáculo compañero en una comunidad:",[["Subes fotos activamente primero y lideras la conversación","E"],["Disfrutas observando tranquilamente las reacciones de los demás","I"],["Te mezclas e interactúas con la gente en un ambiente animado","E"],["Hablas casualmente con solo unos pocos amigos cercanos","I"]]],
       ["JP","Cuando el tentáculo muestra inesperadamente una condición inusual:",[["Calmidades buscas la causa y contramedida según el manual","J"],["Observas la situación con flexibilidad y te adaptas","P"]]]
     ],
+    names: {
+      ISTJ:["Mateo","Bruno","Dante"], ISFJ:["Lola","Pancho","Kofi"], INFJ:["Luna","Sol","Alma"], INTJ:["Nacho","Gabo","Beto"],
+      ISTP:["Rayo","Fito","Tito"], ISFP:["Coral","Mimi","Nube"], INFP:["Kiki","Pipo","Copo"], INTP:["Nano","Pixel","Gato"],
+      ESTP:["Rudo","Bimba","Chispa"], ESFP:["Fiesta","Chiqui","Pola"], ENFP:["Luz","Brio","Zoe"], ENTP:["Trapo","Loki","Pin"),
+      ESTJ:["Rocco","Thor","Max"], ESFJ:["Miel","Menta","Lila"], ENFJ:["Ariel","Cielo","Paz"], ENTJ:["César","Rey","Titán"]
+    },
     r: {
       ISTJ:{t:"Tentáculo Guardia Puntual",q:"3 minutos antes de la cita, ya esperando en la puerta",d:"Un tentáculo confiable que ama la rutina. Los horarios de comida, paseo y sueño son estrictos y las promesas siempre se cumplen.",s:"Despertadores matutinos, organización de cajones, recordar horarios de medicamentos"},
       ISFJ:{t:"Tentáculo Cobija Acogedora",q:"Si pareces tener frío, ya está sobre tus hombros",d:"Un tentáculo silencioso que vigila de cerca a tu lado. Nota primero los cambios en tu condición y te envuelve cálidamente.",s:"Palmaditas en la espalda, arropar con cobija, snacks nocturnos secretos"},
@@ -497,8 +533,10 @@ function pick(v){
 function finish(){
   const sc={};ans.forEach(([,v])=>sc[v]=(sc[v]||0)+1);
   cur=["EI","SN","TF","JP"].map(p=>(sc[p[0]]||0)>=(sc[p[1]]||0)?p[0]:p[1]).join("");
-  const rLang = I18N[currentLang].r[cur];
-  const rBase = R_base[cur]; // 색상 및 이름 고정값
+  const langData = I18N[currentLang];
+  const rLang = langData.r[cur];
+  const namesList = langData.names[cur];
+  const rBase = R_base[cur]; // 색상 고정값
   
   document.documentElement.style.setProperty("--h",rBase.h);
   $("rt").textContent=rLang.t;
@@ -506,7 +544,7 @@ function finish(){
   $("rm").textContent=cur;
   $("rd").textContent=rLang.d;
   $("rs").textContent=rLang.s;
-  $("rn").innerHTML=rBase.n.map(n=>'<span class="chip">'+n+'</span>').join("");
+  $("rn").innerHTML=namesList.map(n=>'<span class="chip">'+n+'</span>').join("");
   drawResult();show("result");window.scrollTo(0,0);
 }
 
@@ -515,24 +553,12 @@ function drawResult(){
   $("rpet").innerHTML=pet(rBase.h,ACC[cur]);
 }
 
-// 언어별 변하지 않는 색상 및 고유 추천 이름 데이터
+// 색상 고정 데이터
 const R_base = {
-  ISTJ:{h:215,n:["두부","콩이","밤이"]},
-  ISFJ:{h:25,n:["모찌","몽이","호두"]},
-  INFJ:{h:275,n:["달이","루나","미오"]},
-  INTJ:{h:255,n:["마루","로이","토리"]},
-  ISTP:{h:190,n:["쿠로","코코","하리"]},
-  ISFP:{h:320,n:["푸딩","모카","젤리"]},
-  INFP:{h:285,n:["솜이","구름","뭉이"]},
-  INTP:{h:165,n:["루미","타타","보노"]},
-  ESTP:{h:12,n:["치즈","탄이","레오"]},
-  ESFP:{h:50,n:["뽀삐","쿠키","망고"]},
-  ENFP:{h:335,n:["몽글","사탕","레몬"]},
-  ENTP:{h:130,n:["아몬드","푸푸","두리"]},
-  ESTJ:{h:235,n:["맥스","보배","도리"]},
-  ESFJ:{h:5,n:["밤톨","까미","뽀미"]},
-  ENFJ:{h:45,n:["소라","해랑","동이"]},
-  ENTJ:{h:355,n:["레이","몰리","타이"]}
+  ISTJ:{h:215}, ISFJ:{h:25}, INFJ:{h:275}, INTJ:{h:255},
+  ISTP:{h:190}, ISFP:{h:320}, INFP:{h:285}, INTP:{h:165},
+  ESTP:{h:12}, ESFP:{h:50}, ENFP:{h:335}, ENTP:{h:130},
+  ESTJ:{h:235}, ESFJ:{h:5}, ENFJ:{h:45}, ENTJ:{h:355}
 };
 
 const PL="#2f2445";
@@ -578,9 +604,11 @@ function pet(h,k){
 $("go").onclick=()=>{i=0;ans=[];show("quiz");render()};
 $("again").onclick=()=>{document.documentElement.style.setProperty("--h",340);heroPet();show("start");window.scrollTo(0,0)};
 $("share").onclick=async()=>{
-  const rLang = I18N[currentLang].r[cur];
-  const t = I18N[currentLang];
-  const text=`${t.resKind} 「${rLang.t}」 (${cur}) — ${t.box3}: ${R_base[cur].n[0]}\n`+location.href;
+  const langData = I18N[currentLang];
+  const rLang = langData.r[cur];
+  const namesList = langData.names[cur];
+  const t = langData;
+  const text=`${t.resKind} 「${rLang.t}」 (${cur}) — ${t.box3}: ${namesList[0]}\n`+location.href;
   try{ if(navigator.share){await navigator.share({title:"반려 촉수 테스트",text});return} await navigator.clipboard.writeText(text);toast(t.toastCopy) }catch(e){toast(t.toastCancel)}
 };
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800)}
