@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나에게 어울리는 반려 촉수 테스트</title>
+<meta property="og:title" content="나에게 어울리는 반려 촉수 테스트">
+<meta property="og:description" content="10개의 질문으로 알아보는 나의 반려 촉수. 이름과 예상 MBTI까지!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f0ff;--ink:#2f2445;--pt:#ff6b8b;--y:#ffd15c;--h:340}
+*{box-sizing:border-box;margin:0}
+body{background-color:var(--bg);background-image:radial-gradient(#dcd0ff 2px,transparent 2.6px);background-size:24px 24px;color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;display:flex;justify-content:center}
+main{width:100%;max-width:480px;padding:26px 16px 56px;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,.jua,.btn,.badge,.stick{font-family:"Jua","Apple SD Gothic Neo",sans-serif;font-weight:400}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--pt);outline-offset:2px}
+.hide{display:none!important}
+
+/* 상단 제작자 링크 & 언어 선택 바 스타일 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.82rem;
+}
+.creator-link {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--ink);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.creator-link:hover { opacity: 1; }
+.lang-select {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 3px 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+}
+
+.card{background:#fff;border:2.5px solid var(--ink);border-radius:20px;box-shadow:4px 4px 0 var(--ink)}
+.pet svg{width:200px;height:250px;display:block;margin:0 auto;overflow:visible}
+.sway{transform-box:fill-box;transform-origin:50% 92%;animation:sway 3.6s ease-in-out infinite}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+#start{text-align:center;margin:auto 0}
+.stage{position:relative;width:240px;margin:0 auto}
+.bubble{position:absolute;right:-14px;top:10px;background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:4px 12px;font-family:"Jua",sans-serif;font-size:1rem;transform:rotate(5deg);z-index:2}
+.bubble:after{content:"";position:absolute;left:12px;bottom:-10px;width:12px;height:12px;background:#fff;border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);transform:rotate(40deg) skew(10deg)}
+#start h1{font-size:2.4rem;line-height:1.2;margin:10px 0 8px}
+#start p{margin-bottom:20px;color:#6b5a8e;font-size:0.95rem}
+.btn{background:var(--pt);color:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:12px 24px;font-size:1.15rem;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s;text-decoration:none;display:inline-block;text-align:center;}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.btn.alt{background:#fff;color:var(--ink)}
+.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.tags span,.chip{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:2px 10px;font-size:0.82rem;font-weight:600}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.count{font-family:"Jua",sans-serif;font-size:1.05rem;white-space:nowrap}
+.bar{flex:1;height:14px;background:#fff;border:2.5px solid var(--ink);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--pt);transition:width .3s}
+.q{padding:24px 18px 18px;position:relative;margin-bottom:18px}
+.badge{position:absolute;top:-14px;left:16px;background:var(--y);border:2.5px solid var(--ink);border-radius:10px;padding:0 12px;font-size:1rem}
+#qtext{font-size:1.35rem;line-height:1.4;min-height:3.8rem}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:13px 16px;font-size:0.96rem;font-weight:500;box-shadow:2.5px 2.5px 0 var(--ink);transition:transform .1s,background .15s}
+.opt:nth-child(1):hover{background:#ffe3ed}.opt:nth-child(2):hover{background:#e1f2ff}.opt:nth-child(3):hover{background:#fff3cc}.opt:nth-child(4):hover{background:#e2f7ea}
+.opt:hover{transform:translate(-2px,-2px)}
+.opt.on{background:var(--y)!important;transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+#result{text-align:center;animation:pop .35s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{from{opacity:0;transform:scale(.95)}}
+.rcard{padding:16px 16px 20px;background:hsl(var(--h) 90% 93%)}
+.rcard .pet svg{width:180px;height:220px}
+.kind{font-size:0.9rem;font-weight:600;color:#6b5a8e}
+#rt{font-size:1.8rem;line-height:1.25;margin:2px 0 4px}
+#rq{font-size:0.9rem;font-weight:600;color:#6b5a8e;margin-bottom:12px}
+.stick{display:inline-block;background:#fff;border:2.5px solid var(--ink);border-radius:10px;padding:2px 14px;font-size:1.1rem;transform:rotate(-1deg)}
+.stick b{font-size:1.6rem;letter-spacing:0.08em;margin-left:6px;font-weight:400}
+.box{padding:14px 16px;margin-top:14px;text-align:left}
+.box h3{font-family:"Jua",sans-serif;font-weight:400;font-size:1rem;margin-bottom:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:"Jua",sans-serif;font-weight:400;font-size:1.05rem;padding:3px 14px}
+.chip:nth-child(1){background:#ffd6e4}.chip:nth-child(2){background:#d3efff}.chip:nth-child(3){background:#fff3b0}
+.row{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 18px;border-radius:99px;opacity:0;transition:.3s;pointer-events:none;font-size:0.9rem}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.sway,.eye,#result{animation:none}.btn,.opt{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<!-- 상단 제작자 링크 & 언어 선택 -->
+<div class="top-bar">
+  <a href="https://caveduck.io/ko/user/RunnyBunny" target="_blank" class="creator-link" id="txt-creator">by RunnyBunny</a>
+  <select id="lang-select" class="lang-select" onchange="changeLang(this.value)">
+    <option value="ko" selected>한국어</option>
+    <option value="en">English</option>
+    <option value="ja">日本語</option>
+    <option value="zh">中文 (简体)</option>
+    <option value="tw">中文 (繁體)</option>
+    <option value="es">Español</option>
+  </select>
+</div>
+
+<section id="start">
+<div class="stage"><div class="bubble" id="bubble-txt">데려갈래?</div><div class="pet" id="hero"></div></div>
+<h1 id="title-txt">반려 촉수<br>성향 진단 테스트</h1>
+<p id="desc-txt">화분 속에서 자라난 나만의 촉수 취향을 알아보세요.</p>
+<button class="btn" id="go">테스트 시작하기</button>
+<div class="tags" id="tags-txt"><span>10문항</span><span>결과 16종</span><span>맞춤 이름·MBTI</span></div>
+</section>
+
+<section id="quiz" class="hide">
+<div class="top"><span class="count" id="cnt"></span><div class="bar"><i id="bar"></i></div></div>
+<div class="card q"><span class="badge" id="qn"></span><h2 id="qtext"></h2></div>
+<div class="opts" id="opts"></div>
+</section>
+
+<section id="result" class="hide" aria-live="polite">
+<div class="card rcard">
+<div class="pet" id="rpet"></div>
+<div class="kind" id="res-kind-txt">당신의 반려 촉수는</div>
+<h1 id="rt"></h1>
+<div id="rq"></div>
+<div class="stick"><span id="mbti-label">예상 MBTI</span><b id="rm"></b></div>
+</div>
+<div class="card box"><h3 id="res-box1-title">이런 촉수예요</h3><div id="rd"></div></div>
+<div class="card box"><h3 id="res-box2-title">이 촉수의 특기</h3><div id="rs"></div></div>
+<div class="card box"><h3 id="res-box3-title">추천 이름</h3><div class="chips" id="rn"></div></div>
+<div class="row">
+  <a class="btn" href="https://ko.cvdk.io/c/1pW9SCLORf-PhbbKEJAMYA?rc=B59S5dTqhB" target="_blank" id="btn-grow">반려 촉수 키우러 가기</a>
+  <button class="btn alt" id="share">결과 공유</button>
+  <button class="btn alt" id="again">다시 하기</button>
+</div>
+</section>
+</main>
+<div id="toast" role="status"></div>
+
+<script>
+// 다국어 텍스트 데이터베이스
+const I18N = {
+  ko: {
+    bubble: "데려갈래?",
+    title: "반려 촉수<br>성향 진단 테스트",
+    desc: "화분 속에서 자라난 나만의 촉수 취향을 알아보세요.",
+    goBtn: "테스트 시작하기",
+    tags: ["10문항", "결과 16종", "맞춤 이름·MBTI"],
+    resKind: "당신의 반려 촉수는",
+    mbtiLabel: "예상 MBTI",
+    box1: "이런 촉수예요",
+    box2: "이 촉수의 특기",
+    box3: "추천 이름",
+    btnGrow: "반려 촉수 키우러 가기",
+    shareBtn: "결과 공유",
+    againBtn: "다시 하기",
+    toastCopy: "결과를 복사했어요",
+    toastCancel: "공유를 취소했어요",
+    q: [
+      ["EI","퇴근/하교 후 방에 들어왔을 때, 반려 촉수의 첫 반응은?",[["유리벽에 빨판을 찰싹 붙이고 격하게 마중 나온다","E"],["수조 구석 은신처에서 눈만 빼꼼 내밀고 지켜본다","I"],["사람 소리가 들리자마자 위로 쑥 올라와 반긴다","E"],["느긋하게 몸을 말고 잠들어 있다가 천천히 깬다","I"]]],
+      ["SN","촉수에게 새 먹이를 줄 때 당신이 더 중요하게 보는 것은?",[["영양 성분표와 유통기한, 실용적인 만족도","S"],["오늘 촉수의 기분을 환기해 줄 색다른 비주얼","N"],["매번 주던 익숙하고 검증된 안전한 먹이","S"],["왠지 신비로운 이야기가 담겨 있을 것 같은 호기심","N"]]],
+      ["TF","촉수가 실수로 책상 위 물건을 떨어뜨려 어지럽혔을 때 당신의 반응은?",[["왜 이런 동선으로 움직였는지 원인부터 분석한다","T"],["다친 곳은 없는지 먼저 살피고 다독인다","F"],["앞으로 이런 일이 없도록 수조 배치를 바꾼다","T"],["'놀고 싶었구나' 하고 가볍게 웃어넘긴다","F"]]],
+      ["JP","반려 촉수 전용 일과 관리(물갈이·먹이 주기)를 할 때:",[["시간표대로 정확하게 루틴을 지켜서 관리한다","J"],["대략적인 틀만 잡아두고 그날 컨디션에 맞춘다","P"],["체크리스트를 만들어 하나씩 완벽하게 끝낸다","J"],["생각날 때 유연하게 자유롭게 챙겨주는 편이다","P"]]],
+      ["EI","주말에 촉수와 함께 시간을 보낸다면?",[["사람들이 모이는 활기찬 카페나 야외 산책","E"],["조용한 방 안에서 둘만의 아늑한 휴식","I"],["새로운 장소를 탐방하며 자극받기","E"],["익숙한 방 구석에서 평화롭게 사색하기","I"]]],
+      ["SN","촉수의 몸빛이나 빨판 패턴을 관찰할 때 주로 드는 생각은?",[["빛의 반사 각도나 색상의 정확한 디테일","S"],["이 무늬는 저 먼 심해의 어떤 풍경을 닮았을까","N"],["만졌을 때의 촉감과 표면의 질감","S"],["이 촉수가 앞으로 어떤 모습으로 자라날지 미래 상상","N"]]],
+      ["TF","주변에서 '너는 촉수를 너무 오냐오냐 키운다'고 할 때:",[["기준과 원칙에 맞춰 교육하는 게 맞다고 반박한다","T"],["내 방식대로 아껴주는 게 뭐가 나쁘냐고 웃어넘긴다","F"],["객관적인 양육 데이터와 효율성을 따져본다","T"],["상대방 기분이 상하지 않게 부드럽게 대화한다","F"]]],
+      ["JP","촉수 전용 수조 레이아웃을 바꿀 때 스타일은?",[["미리 스케치하고 순서대로 완벽하게 배치한다","J"],["일단 배치해보고 마음에 안 들면 즉흥적으로 바꾼다","P"],["규칙에 맞춰 깔끔하게 정돈된 구조를 선호한다","J"],["그때그때 기분에 따라 자유로운 배치를 즐긴다","P"]]],
+      ["EI","모르는 사람들이 있는 커뮤니티에 내 반려 촉수를 자랑할 때:",[["먼저 적극적으로 사진을 올리고 대화를 주도한다","E"],["다른 사람들의 반응을 조용히 구경하며 즐긴다","I"],["활기찬 분위기 속에서 사람들과 어울린다","E"],["친한 몇몇 사람들과만 소소하게 이야기를 나눈다","I"]]],
+      ["JP","예상치 못하게 촉수가 평소와 다른 컨디션을 보일 때:",[["당황하지 않고 매뉴얼대로 원인과 대책을 찾는다","J"],["일단 상황을 유연하게 지켜보며 맞춰준다","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"정각에 문을 두두리는 근위 촉수",q:"약속 시간 3분 전, 이미 문 앞에 서 있음",d:"규칙적인 생활을 사랑하는 든든한 촉수예요. 밥때, 산책 시간, 취침 시간이 정확하고 한 번 약속하면 반드시 지켜요.",s:"시간 맞춰 깨워주기, 서랍 정리, 약 먹을 시간 알려주기"},
+      ISFJ:{t:"포근하게 감싸주는 담요 촉수",q:"당신이 추워 보이면 이미 어깨에 걸쳐져 있음",d:"조용히 곁을 지키며 세심하게 챙기는 촉수예요. 당신의 컨디션 변화를 가장 먼저 알아채고 따뜻하게 몸을 말아줘요.",s:"등 토닥이기, 이불 덮어주기, 야식 몰래 챙겨두기"},
+      INFJ:{t:"달빛 아래 속삭이는 심해 예언 촉수",q:"말하지 않아도 이미 다 알고 있음",d:"신비로운 분위기를 풍기며 당신의 속마음을 꿰뚫어 보는 촉수예요. 가끔 의미심장하게 흔들리는데, 대체로 맞는 말이에요.",s:"기분 읽기, 위로의 한마디, 새벽 감성 대화 상대"},
+      INTJ:{t:"어둠 속에서 판을 짜는 전략가 촉수",q:"이미 세 수 앞을 내다보고 있음",d:"느긋해 보이지만 머릿속에서는 늘 계획이 돌아가는 촉수예요. 효율을 사랑해서 당신의 인생 로드맵도 몰래 짜고 있어요.",s:"일정 최적화, 장기 플랜 설계, 체스와 보드게임"},
+      ISTP:{t:"뚝딱뚝딱 고치는 만능 정비 촉수",q:"말은 적고 손은 빠름",d:"말수는 적지만 필요할 때 척척 나타나는 촉수예요. 고장 난 건 일단 만져보고, 해결하고 나서야 한마디 해요.",s:"조립과 수리, 병뚜껑 따기, 무거운 짐 거들기"},
+      ISFP:{t:"산호 사이를 유영하는 감성 예술 촉수",q:"오늘의 색은 파스텔 핑크",d:"감각이 섬세하고 자유로운 촉수예요. 노을, 음악, 햇살처럼 아름다운 순간이 오면 말없이 곁에서 함께 감상해요.",s:"그림 그리기, 플레이리스트 큐레이션, 노을 감상"},
+      INFP:{t:"구름 위를 떠다니는 몽상가 해파리 촉수",q:"현실보다 상상이 더 포근함",d:"혼자만의 세계가 넓고 마음이 여린 촉수예요. 당신이 힘들 땐 말없이 반딧불처럼 빛나며 곁을 지켜줘요.",s:"감성 일기 쓰기, 별 보기, 새벽에 같이 멍때리기"},
+      INTP:{t:"플라스크를 들고 가설을 세우는 연구 촉수",q:"왜 그런지는 일단 실험해봐야 앎",d:"호기심이 끝이 없는 촉수예요. 당신이 던진 사소한 질문 하나로 밤새 연구에 빠지지만, 밥은 챙겨줘야 해요.",s:"잡지식 대방출, 퍼즐 풀기, 이상한 발명품 제작"},
+      ESTP:{t:"파도를 타고 달려오는 서퍼 촉수",q:"일단 해보고 생각하자",d:"에너지 넘치고 행동이 빠른 촉수예요. 산책은 곧 달리기고 놀이는 곧 모험이라, 당신의 운동량이 확실히 늘어나요.",s:"달리기 파트너, 분위기 반전, 위기 상황 대처"},
+      ESFP:{t:"조명 아래서 춤추는 파티 촉수",q:"등장하자마자 분위기 전환",d:"어디서든 주인공이 되는 사랑스러운 촉수예요. 당신의 평범한 집을 매일 작은 축제로 만들어줘요.",s:"댄스 챌린지, 셀카 포즈, 집들이 호스트"},
+      ENFP:{t:"불꽃놀이처럼 터지는 아이디어 촉수",q:"오늘의 새로운 꿈을 발표합니다",d:"호기심 많고 열정적인 촉수예요. 하루에 다섯 가지 계획을 세우고 세 가지는 이미 시작해 있어요. 끝은 당신이 함께 도와야 해요.",s:"아이디어 뱅크, 응원단장, 새로운 취미 발굴"},
+      ENTP:{t:"일단 반박부터 하는 토론 촉수",q:"악마의 변호인을 자처함",d:"말솜씨가 좋고 장난기가 가득한 촉수예요. 재미를 위해 반대 의견을 내지만 사실은 당신과 대화하는 게 제일 즐거워요.",s:"토론 상대, 농담 폭격, 허를 찌르는 질문"},
+      ESTJ:{t:"질서를 지키는 규율 반장 촉수",q:"오늘 할 일 목록 확인했습니까?",d:"책임감 강하고 추진력 있는 촉수예요. 당신의 일정과 집안 규칙을 꼼꼼히 관리하지만, 사실 칭찬받으면 제일 좋아해요.",s:"할 일 관리, 회의 진행, 대청소 지휘"},
+      ESFJ:{t:"모두를 챙기는 오지랖 만렙 돌봄 촉수",q:"밥은 먹었니? 누구랑 먹었니?",d:"정 많고 사교적인 촉수예요. 당신 주변 사람들의 안부까지 챙기며 모두가 즐거운 분위기를 만들려고 애써요.",s:"반찬 챙겨주기, 생일 이벤트, 인맥 연결"},
+      ENFJ:{t:"등대처럼 길을 비춰주는 선장 촉수",q:"우리 같이 가요, 내가 이끌게요",d:"따뜻한 리더십을 가진 촉수예요. 당신의 가능성을 믿고 끝없이 응원하며 함께 성장하는 것을 가장 기뻐해요.",s:"동기부여, 고민 상담, 팀 분위기 메이킹"},
+      ENTJ:{t:"깊은 바다를 지휘하는 제독 촉수",q:"목표는 정복, 그 전에 아침 식사",d:"카리스마와 추진력을 갖춘 촉수예요. 큰 그림을 그리며 앞장서고, 당신이 포기하려고 하면 먼저 팔을 걷어붙여요.",s:"프로젝트 리드, 협상, 야망 있는 계획 수립"}
+    }
+  },
+  en: {
+    bubble: "Take me?",
+    title: "Companion Tentacle<br>Personality Test",
+    desc: "Discover your unique tentacle preference grown in a pot.",
+    goBtn: "Start Test",
+    tags: ["10 Questions", "16 Results", "Custom Name & MBTI"],
+    resKind: "Your companion tentacle is",
+    mbtiLabel: "Estimated MBTI",
+    box1: "About this tentacle",
+    box2: "Special skill",
+    box3: "Recommended names",
+    btnGrow: "Raise Companion Tentacle",
+    shareBtn: "Share Result",
+    againBtn: "Try Again",
+    toastCopy: "Result copied!",
+    toastCancel: "Share cancelled",
+    q: [
+      ["EI","When you enter the room after work/school, what is the tentacle's first reaction?",[["Sticks its suction cups tightly to the glass and excitedly welcomes you","I"],["Watches you with just its eyes peering from the corner hideout","E"],["Rises straight up the moment it hears your voice","E"],["Slowly wakes up after sleeping in a cozy ball","I"]]],
+      ["SN","When feeding your tentacle, what do you care about most?",[["Nutritional facts and expiration dates for practical satisfaction","S"],["A fresh visual style to refresh its mood today","N"],["The familiar, tested safe food you always give","S"],["Curiosity about a mysterious story behind it","N"]]],
+      ["TF","When the tentacle accidentally knocks over and messes up a desk item, you:",[["Analyze the cause of why it moved that way first","T"],["Check if it's hurt first and comfort it","F"],["Redesign the tank layout so this won't happen again","T"],["Smile and let it go thinking 'it wanted to play'","F"]]],
+      ["JP","When managing tentacle routines (water change, feeding):",[["Follow the schedule strictly and precisely","J"],["Keep a loose framework and adjust to daily condition","P"],["Create a checklist and finish everything perfectly","J"],["Take care of it flexibly whenever you think of it","P"]]],
+      ["EI","If you spend the weekend with your tentacle:",[["A lively cafe or outdoor stroll where people gather","E"],["A cozy, quiet rest just between the two of you in the room","I"],["Exploring a new place to get stimulated","E"],["Peaceful contemplation in a familiar room corner","I"]]],
+      ["SN","When observing the tentacle's body color or suction pattern, you mainly think:",[["Precise details of light reflection angles or colors","S"],["What distant deep-sea scenery does this pattern resemble?","N"],["The texture and feel when touched","S"],["Imagining what future form this tentacle will grow into","N"]]],
+      ["TF","When people say 'You spoil your tentacle too much':",[["Argue that training according to standards and principles is correct","T"],["Laugh it off, saying what's wrong with cherishing it your own way","F"],["Consider objective parenting data and efficiency","T"],["Talk softly so the other person's feelings aren't hurt","F"]]],
+      ["JP","When changing the tentacle's tank layout, your style is:",[["Sketch in advance and arrange perfectly in order","J"],["Try placing things and change them improvisational if you don't like it","P"],["Prefer a neatly organized structure according to rules","J"],["Enjoy free placement according to your mood at the moment","P"]]],
+      ["EI","When showing off your companion tentacle in a community:",[["Actively upload photos first and lead the conversation","E"],["Quietly enjoy watching other people's reactions","I"],["Mix and mingle with people in a lively atmosphere","E"],["Talk casually with just a few close friends","I"]]],
+      ["JP","When the tentacle unexpectedly shows an unusual condition:",[["Calmly find the cause and countermeasure according to the manual","J"],["Quietly watch the situation flexibly and adapt","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"Punctual Guard Tentacle",q:"3 minutes before appointment time, already waiting at the door",d:"A reliable tentacle that loves routine. Feeding, walking, and sleeping schedules are strict and promises are always kept.",s:"Morning wake-up calls, drawer organization, reminding medicine times"},
+      ISFJ:{t:"Cozy Blanket Tentacle",q:"If you look cold, it's already draped over your shoulders",d:"A quiet tentacle that watches closely by your side. It notices your condition changes first and wraps around you warmly.",s:"Back pats, blanket tucking, secret late-night snacks"},
+      INFJ:{t:"Deep Sea Oracle Tentacle",q:"Knows everything without you saying a word",d:"Exudes a mysterious vibe and peers straight into your inner thoughts. Sometimes sways meaningfully, and it's usually right.",s:"Reading moods, comforting words, late-night emotional chats"},
+      INTJ:{t:"Strategic Mastermind Tentacle",q:"Already thinking three steps ahead",d:"Looks relaxed, but plans are always spinning in its head. Loves efficiency and is secretly mapping out your life roadmap.",s:"Schedule optimization, long-term planning, chess and board games"},
+      ISTP:{t:"Handy Maintenance Tentacle",q:"Few words, fast hands",d:"Quiet but shows up right when needed. Touches broken things first to check, and speaks only after fixing them.",s:"Assembly and repair, bottle cap opening, carrying heavy loads"},
+      ISFP:{t:"Coral-Dancing Artistic Tentacle",q:"Today's color is pastel pink",d:"Sensitive and free-spirited. When beautiful moments like sunsets, music, or sunshine arrive, it silently appreciates them with you.",s:"Drawing, playlist curation, sunset watching"},
+      INFP:{t:"Floating Dreamer Jellyfish Tentacle",q:"Imagination is cozier than reality",d:"Has a wide inner world and a tender heart. When you're having a hard time, it glows silently like a firefly by your side.",s:"Emotional diary writing, stargazing, blank staring together"},
+      INTP:{t:"Flask-Holding Researcher Tentacle",q:"Must test why things happen first",d:"Endless curiosity. A single casual question from you keeps it researching all night, but remember to feed it.",s:"Trivia outpouring, puzzle solving, bizarre invention building"},
+      ESTP:{t:"Wave-Riding Surfer Tentacle",q:"Let's try it first and think later",d:"Energetic and fast-paced. Walks are runs and playtime is adventure, definitely increasing your daily activity.",s:"Running partner, mood reversal, crisis management"},
+      ESFP:{t:"Spotlight Party Tentacle",q:"Instantly changes the mood upon arrival",d:"An adorable tentacle that becomes the star everywhere. Turns your ordinary home into a daily mini-festival.",s:"Dance challenges, selfie posing, housewarming hosting"},
+      ENFP:{t:"Firework Idea Tentacle",q:"Announcing today's new dream",d:"Curious and passionate. Makes five plans a day and has already started three. You have to help finish them.",s:"Idea bank, cheering squad leader, discovering new hobbies"},
+      ENTP:{t:"Devil's Advocate Debate Tentacle",q:"Plays devil's advocate first",d:"Witty and full of mischief. Takes counter-positions for fun, but actually enjoys talking with you the most.",s:"Debate partner, joke bombing, sharp question throwing"},
+      ESTJ:{t:"Rule-Abiding Monitor Tentacle",q:"Have you checked today's to-do list?",d:"Strong sense of responsibility and drive. Meticulously manages your schedule and house rules, but loves praise most.",s:"To-do management, meeting facilitation, deep-cleaning command"},
+      ESFJ:{t:"Busybody Caretaker Tentacle",q:"Did you eat? Who did you eat with?",d:"Affectionate and sociable. Cares even about your acquaintances' well-being to create a joyful atmosphere for everyone.",s:"Side-dish sharing, birthday events, network connecting"},
+      ENFJ:{t:"Lighthouse Captain Tentacle",q:"Let's go together, I'll lead the way",d:"Has warm leadership. Believes in your potential, constantly cheers you on, and rejoices most in growing together.",s:"Motivation, counseling, team mood making"},
+      ENTJ:{t:"Deep-Sea Admiral Tentacle",q:"Goal is conquest, breakfast comes first",d:"Charismatic and driven. Draws the big picture and takes the lead; rolls up sleeves first if you try to give up.",s:"Project leading, negotiation, ambitious planning"}
+    }
+  },
+  ja: {
+    bubble: "連れて行く?",
+    title: "相棒の触手<br>性格診断テスト",
+    desc: "植木鉢ですくすく育った自分だけの触手の好みを調べてみましょう。",
+    goBtn: "テスト開始",
+    tags: ["10問", "結果16種", "おすすめ名前・MBTI"],
+    resKind: "あなたの相棒の触手は",
+    mbtiLabel: "予想MBTI",
+    box1: "こんな触手です",
+    box2: "この触手の特技",
+    box3: "おすすめの名前",
+    btnGrow: "触手を育成しに行く",
+    shareBtn: "結果を共有",
+    againBtn: "もう一度",
+    toastCopy: "結果をコピーしました",
+    toastCancel: "共有をキャンセルしました",
+    q: [
+      ["EI","仕事や学校から帰宅した時、触手の最初の反応は？",[["ガラスに吸盤をぴったりつけて大喜びで出迎える","I"],["水槽の隅の隠れ家から目だけをのぞかせて見つめる","E"],["声が聞こえた瞬間、すっと上に伸びて喜ぶ","E"],["のんびり丸まって寝てから、ゆっくり起きる","I"]]],
+      ["SN","触手に新しいエサをあげる時、あなたがより重視するのは？",[["栄養成分表示と賞味期限、実用的な満足度","S"],["今日の気分転換になるような一風変わったビジュアル","N"],["いつもあげている安心・安全な定番のエサ","S"],["なんだか神秘的なストーリーがありそうな好奇心","N"]]],
+      ["TF","触手がうっかり机の上のものを落として散らかした時、あなたの反応は？",[["なぜそんな動線で動いたのか原因から分析する","T"],["怪我はないか真っ先に確認してなだめる","F"],["二度と起きないよう水槽のレイアウトを変える","T"],["「遊びたかったんだね」と優しく笑って流す","F"]]],
+      ["JP","触手専用のお世話（水換え・エサやり）をする時：",[["時間割通り正確にルーティンを守る","J"],["大まかな枠だけ決めて、その日のコンディションに合わせる","P"],["チェックリストを作って一つずつ完璧に終わらせる","J"],["思いついた時に柔軟に気楽に済ませる","P"]]],
+      ["EI","週末に触手と一緒に過ごすなら？",[["人が集まる賑やかなカフェや屋外の散歩","E"],["静かな部屋で2人きりの穏やかな時間","I"],["新しい場所を探検して刺激を受ける","E"],["お馴染みの部屋の隅で平和に物思いに耽る","I"]]],
+      ["SN","触手の体色や吸盤の模様を観察する時、主に考えることは？",[["光の反射角度や色の正確なディテール","S"],["この模様は遠い深海のどんな風景に似ているだろうか","N"],["触った時の感触や表面の質感","S"],["この触手が将来どんな姿に成長するか未来の想像","N"]]],
+      ["TF","周りから「触手を甘やかしすぎだ」と言われた時：",[["基準や原則通りに教育するのが正しいと反論する","T"],["自分のやり方で可愛がって何が悪いと笑い飛ばす","F"],["客観的な飼育データや効率性を考慮する","T"],["相手の気分を害さないよう柔らかく返事をする","F"]]],
+      ["JP","触手の水槽レイアウトを変える時のスタイルは？",[["あらかじめスケッチして順番通りに完璧に配置する","J"],["とりあえず置いてみて、気に入らなければ即興で変える","P"],["規則通りにきれいに整えられた構造を好む","J"],["その時の気分に合わせて自由に配置を楽しむ","P"]]],
+      ["EI","見知らぬ人がいるコミュニティに自分の触手を自慢する時：",[["自分から積極的に写真を投稿して会話を主導する","E"],["他の人たちの反応を静かに眺めて楽しむ","I"],["賑やかな雰囲気の中で人々と交流する","E"],["親しい数人とだけこっそり話す","I"]]],
+      ["JP","予想外に触手のコンディションがいつもと違う時：",[["慌てずマニュアル通りに原因と対策を探す","J"],["まずは状況を柔軟に見守り、合わせてあげる","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"時間厳守の近衛触手",q:"約束の3分前、すでにドアの前にいる",d:"規則正しい生活を愛する頼もしい触手です。ご飯や散歩、就寝時間が正確で、一度した約束は必ず守ります。",s:"時間通りの起こし、引き出しの整理、薬の時間の通知"},
+      ISFJ:{t:"包み込むブランケット触手",q:"寒そうにしていると、すでに肩に掛けられている",d:"静かにそばで見守り、細やかに気遣ってくれる触手です。あなたのコンディションの変化を真っ先に察知し、温かく包み込みます。",s:"背中トントン、布団かけ、こっそり夜食の準備"},
+      INFJ:{t:"月夜に囁く深海の予言触手",q:"言わなくてもすべてお見通し",d:"神秘的な雰囲気をまとい、あなたの本心をズバリと見抜く触手です。時々意味深に揺れますが、だいたい当たっています。",s:"気分の察知、慰めの言葉、深夜の感性トークのお相手"},
+      INTJ:{t:"闇夜で策を練る戦略家触手",q:"すでに三手先まで見据えている",d:"のんびり見えても頭の中では常に計画が巡っている触手です。効率を愛し、あなたの人生のロードマップもこっそり作っています。",s:"スケジュールの最適化、長期プラン設計、チェスやボードゲーム"},
+      ISTP:{t:"テキパキ直す万能整備触手",q:"口数は少なく、手際が良い",d:"無口ですが必要な時にさっと現れる触手です。壊れたものはとりあえず触って確かめ、直してから一言話します。",s:"組み立てと修理、瓶のフタ開け、重い荷物持ち"},
+      ISFP:{t:"サンゴを泳ぐ感性アーティスト触手",q:"今日のカラーはパステルピンク",d:"感覚が繊細で自由な触手です。夕焼け、音楽、日差しのような美しい瞬間が訪れると、黙ってそばで一緒に堪能します。",s:"お絵描き、プレイリストの選曲、夕焼け鑑賞"},
+      INFP:{t:"雲を漂う夢想家クラゲ触手",q:"現実よりも想像の中が温かい",d:"自分の世界が広く、心が優しい触手です。あなたが疲れた時は、ホタルのように静かに光ってそばに寄り添います。",s:"感性日記、星空観察、一緒にぼーっとする"},
+      INTP:{t:"フラスコを手に仮説を立てる研究触手",q:"なぜそうなるのかまずは実験してみる",d:"好奇心が尽きない触手です。あなたが投げかけた何気ない質問一つで徹夜で研究しますが、ご飯の世話は必要です。",s:"雑学大放出、パズル、変な発明品の製作"},
+      ESTP:{t:"波に乗って駆け抜けるサーファー触手",q:"まずはやってみてから考えよう",d:"エネルギーに満ち溢れ、行動が素早い触手です。散歩は即ち走り、遊びは即ち冒険なので、あなたの運動量が確実に増えます。",s:"ランニングパートナー、気分の切り替え、危機対応"},
+      ESFP:{t:"スポットライトの下で踊るパーティ触手",q:"登場するやいなや雰囲気が一変",d:"どこへ行っても主役になる愛らしい触手です。あなたの平凡な日常を、毎日小さなフェスティバルにしてくれます。",s:"ダンスチャレンジ、自撮りポーズ、ホームパーティのホスト"},
+      ENFP:{t:"花火のように弾けるアイデア触手",q:"本日の新しい夢を発表します",d:"好奇心旺盛で情熱的な触手です。1日に5つの計画を立て、3つはすでに始動しています。最後はあなたが手伝う必要があります。",s:"アイデアバンク、応援団長、新しい趣味の発掘"},
+      ENTP:{t:"まず反論から入るディベート触手",q:"悪魔の代弁者を自任する",d:"話術が巧みでイタズラ好きな触手です。面白半分で反対意見を出しますが、本当はあなたと話すのが一番楽しいのです。",s:"議論の相手、ジョーク連発、意表を突く質問"},
+      ESTJ:{t:"秩序を守る風紀委員触手",q:"本日のやることリストを確認しましたか？",d:"責任感が強く行動力のある触手です。あなたのスケジュールや家のルールを細かく管理しますが、褒められると実は一番喜びます。",s:"タスク管理、会議の進行、大掃除の指揮"},
+      ESFJ:{t:"おせっかい度MAXの世話焼き触手",q:"ご飯食べた？誰と食べたの？",d:"情が深く社交的な触手です。あなたの周りの人の安否まで気遣い、みんなが楽しい雰囲気を作ろうと努力します。",s:"お惣菜のおすそわけ、サプライズ、人脈作り"},
+      ENFJ:{t:"灯台のように導く船長触手",q:"一緒に行こう、僕が導くよ",d:"温かいリーダーシップを持つ触手です。あなたの可能性を信じ、果てしなく応援し、共に成長することを何より喜びます。",s:"モチベーション管理、お悩み相談、チームのムード作り"},
+      ENTJ:{t:"深海を指揮する提督触手",q:"目標は征服、その前に朝食",d:"カリスマ性と推進力を備えた触手です。大きな絵を描いて先頭に立ち、あなたが諦めかけたら真っ先に腕まくりします。",s:"プロジェクトのリード、交渉、野心的な計画立案"}
+    }
+  },
+  zh: {
+    bubble: "带我走吗？",
+    title: "宠物触手<br>性格测试",
+    desc: "了解在花盆里长出的专属于你的触手偏好。",
+    goBtn: "开始测试",
+    tags: ["10道题", "16种结果", "定制名字与MBTI"],
+    resKind: "你的宠物触手是",
+    mbtiLabel: "预计 MBTI",
+    box1: "这是一只这样的触手",
+    box2: "这只触手的特长",
+    box3: "推荐名字",
+    btnGrow: "去养宠物触手",
+    shareBtn: "分享结果",
+    againBtn: "重新测试",
+    toastCopy: "结果已复制！",
+    toastCancel: "已取消分享",
+    q: [
+      ["EI","下班/放学回到房间时，触手的第一反应是？",[["把吸盘紧紧贴在玻璃上，热情地迎接你","I"],["从鱼缸角落的藏身处探出半只眼睛观察","E"],["一听到声音就马上向上伸长表示欢迎","E"],["懒洋洋地蜷缩着睡觉，然后慢慢醒来","I"]]],
+      ["SN","给触手喂食新食物时，你更看重的是？",[["营养成分表与保质期，实用的满足感","S"],["能治愈今天心情的别致外观","N"],["一直以来吃惯了的、安全可靠的食物","S"],["觉得背后似乎有什么神秘故事的好奇心","N"]]],
+      ["TF","触手不小心把桌上的东西弄翻弄乱时，你的反应是？",[["先分析它是以什么路线移动导致这样的原因","T"],["先检查有没有受伤并温柔地安慰它","F"],["为了不再发生这种事，重新布置鱼缸","T"],["笑着说‘原来是想玩呀’并原谅它","F"]]],
+      ["JP","进行触手专属的日常护理（换水、喂食）时：",[["严格按照时间表和规律进行管理","J"],["定个大致框架，根据当天的状态灵活调整","P"],["制作清单，把每件事完美地做完","J"],["想起来的时候灵活自由地照顾","P"]]],
+      ["EI","如果和触手一起度过周末：",[["去人来人往的热闹咖啡馆或户外散步","E"],["在安静的房间里享受两个人的温馨休憩","I"],["去探索新地方寻找新鲜刺激","E"],["在熟悉的房间角落平静地思考","I"]]],
+      ["SN","观察触手的体色或吸盘纹路时，脑子里主要想的是？",[["光线反射角度或颜色的精确细节","S"],["这花纹像远海深处的哪种风景呢","N"],["触摸时的触感与表面质感","S"],["想象这只触手以后会成长为什么模样","N"]]],
+      ["TF","当别人说“你把触手惯坏了”时：",[["反驳说按照标准和原则教育才是正确的","T"],["笑着说用自己的方式疼爱有什么不好的","F"],["权衡客观的养育数据和效率","T"],["温柔地回应，以免伤害对方的感情","F"]]],
+      ["JP","改变触手鱼缸布局时的风格是：",[["提前画好草图，按顺序完美布置","J"],["先摆放看看，如果不满意就即兴修改","P"],["喜欢根据规则整齐排列的结构","J"],["根据当时的心情享受自由布局","P"]]],
+      ["EI","在有陌生人的社区里向大家炫耀你的触手时：",[["主动积极地发照片并主导对话","E"],["静静地围观并享受其他人的反应","I"],["在热闹的氛围中与大家交流","E"],["只跟几个亲近的朋友小范围聊天","I"]]],
+      ["JP","当触手表现出意料之外的和平时不一样的状态时：",[["不慌不忙，按照手册寻找原因和对策","J"],["先灵活地观察情况并迎合它","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"准时敲门的近卫触手",q:"距离约定时间还有3分钟，已经在门前等候",d:"热爱规律生活的可靠触手。吃饭、散步、睡觉时间非常准确，一旦许下诺言就一定会遵守。",s:"按时叫醒、整理抽屉、提醒吃药时间"},
+      ISFJ:{t:"温暖包裹的毛毯触手",q:"如果你看起来冷，它已经搭在你肩膀上了",d:"默默守候在身旁、细心照顾你的触手。它能最先察觉你身体状态的变化，并用温暖包裹你。",s:"拍背抚摸、盖被子、偷偷准备宵夜"},
+      INFJ:{t:"月光下低语的深海先知触手",q:"不用开口就已经心领神会",d:"散发着神秘气息，能看穿你内心深处的触手。虽然有时会意味深长地晃动，但基本上都很准。",s:"感知心情、安慰的话语、深夜情感聊天搭子"},
+      INTJ:{t:"暗中布局的战略家触手",q:"已经看穿了后面三步棋",d:"看起来很悠闲，但脑子里总是在转动着计划。热爱效率，甚至还在偷偷帮你规划人生蓝图。",s:"日程优化、长期计划设计、下棋与桌游"},
+      ISTP:{t:"心灵手巧的万能整修触手",q:"话不多但动作极快",d:"虽然话少但在你需要时总会及时出现。坏掉的东西先摸摸看，修好之后才肯说一句话。",s:"组装与修理、开瓶盖、搬运重物"},
+      ISFP:{t:"穿梭珊瑚间的感性艺术触手",q:"今天的颜色是柔和粉色",d:"感官细腻且自由奔放的触手。遇到晚霞、音乐、阳光等美丽瞬间时，会默默陪在旁边一起欣赏。",s:"画画、歌单策划、欣赏晚霞"},
+      INFP:{t:"漂浮云端的梦想家水母触手",q:"想象力比现实更温馨",d:"内心世界广阔且情感细腻的触手。当你感到辛苦时，它会像萤火虫一样在身旁默默发光陪伴。",s:"写情感日记、看星星、一起深夜发呆"},
+      INTP:{t:"手拿烧瓶验证假设的研究触手",q:"为什么会这样，先做个实验再说",d:"好奇心永无止境的触手。你随口抛出的一个小问题就能让它研究一整夜，不过记得喂它吃饭。",s:"科普冷知识、解谜、制作古怪发明"},
+      ESTP:{t:"踏浪前行的冲浪触手",q:"先做了再说，想那么多干嘛",d:"充满活力、行动敏捷的触手。散步就是跑步，玩耍就是冒险，绝对能让你的运动量大大增加。",s:"跑步搭子、转换心情、应对危机"},
+      ESFP:{t:"聚光灯下起舞的派对触手",q:"一登场就瞬间炒热气氛",d:"无论到哪里都能成为焦点的可爱触手。把你的平凡小家变成每天都充满欢庆的小派对。",s:"舞蹈挑战、自拍摆姿势、派对主持"},
+      ENFP:{t:"如烟花般绽放的创意触手",q:"宣布今天的全新梦想",d:"充满好奇心与热情的触手。一天能定五个计划，其中三个已经开始执行了。收尾工作得靠你帮忙。",s:"灵感库、啦啦队长、发掘新爱好"},
+      ENTP:{t:"一言不合先反驳的辩论触手",q:"自封为魔鬼代言人",d:"口才极佳且满肚子恶作剧的触手。为了好玩故意唱反调，但其实最享受和你聊天。",s:"辩论对手、狂轰滥炸的笑话、抛出刁钻问题"},
+      ESTJ:{t:"维护秩序的纪律委员触手",q:"今天的待办清单核对过了吗？",d:"责任心强且执行力极高的触手。把你的日程和家规管理得井井有条，但其实受到表扬时最高兴。",s:"日程管理、主持会议、大扫除总指挥"},
+      ESFJ:{t:"操心度满级的照顾触手",q:"吃饭了吗？和谁一起吃的？",d:"重情义且擅长社交的触手。连你身边朋友的近况都要关心，努力为所有人创造欢乐的氛围。",s:"分享小菜、生日惊喜、拓展人脉"},
+      ENFJ:{t:"指引方向的灯塔船长触手",q:"我们一起走，我来带路",d:"拥有温暖领导力的触手。坚信你的无限可能，给予无尽的鼓励，最喜欢和你一起共同成长。",s:"激励鼓舞、心理咨询、活跃团队气氛"},
+      ENTJ:{t:"指挥深海的提督触手",q:"目标是征服，在此之前先吃早餐",d:"兼具领袖气质与行动力的触手。运筹帷幄并冲在最前面，如果你想放弃，它会第一个挽起袖子。",s:"主导项目、谈判、制定野心勃勃的计划"}
+    }
+  },
+  tw: {
+    bubble: "帶我走嗎？",
+    title: "寵物觸手<br>性格測試",
+    desc: "了解在花盆裡長出的專屬於你的觸手偏好。",
+    goBtn: "開始測試",
+    tags: ["10道題", "16種結果", "客製名字與MBTI"],
+    resKind: "你的寵物觸手是",
+    mbtiLabel: "預計 MBTI",
+    box1: "這是一隻這樣的觸手",
+    box2: "這隻觸手的特長",
+    box3: "推薦名字",
+    btnGrow: "去養寵物觸手",
+    shareBtn: "分享結果",
+    againBtn: "重新測試",
+    toastCopy: "結果已複製！",
+    toastCancel: "已取消分享",
+    q: [
+      ["EI","下班/放學回到房間時，觸手的第一反應是？",[["把吸盤緊緊貼在玻璃上，熱情地迎接你","I"],["從魚缸角落的藏身處探出半隻眼睛觀察","E"],["一聽到聲音就馬上向上伸長表示歡迎","E"],["懶洋洋地蜷縮著睡覺，然後慢慢醒來","I"]]],
+      ["SN","給觸手餵食新食物時，你更看重的是？",[["營養成分表與保質期，實用的滿足感","S"],["能治愈今天心情的別致外觀","N"],["一直以來吃慣了的、安全可靠的食物","S"],["覺得背後似乎有什麼神秘故事的好奇心","N"]]],
+      ["TF","觸手不小心把桌上的東西弄翻弄亂時，你的反應是？",[["先分析它是以什麼路線移動導致這樣的原因","T"],["先檢查有沒有受傷並溫柔地安慰它","F"],["為了不再發生這種事，重新佈置魚缸","T"],["笑着說『原來是想玩呀』並原諒它","F"]]],
+      ["JP","進行觸手專屬的日常護理（換水、餵食）時：",[["嚴格按照時間表和規律進行管理","J"],["定個大致框架，根據當天的狀態靈活調整","P"],["製作清單，把每件事完美地做完","J"],["想起來的時候靈活自由地照顧","P"]]],
+      ["EI","如果和觸手一起度過週末：",[["去人來人往的熱鬧咖啡館或戶外散步","E"],["在安靜的房間裡享受兩個人的溫馨休憩","I"],["去探索新地方尋找新鮮刺激","E"],["在熟悉的房間角落平靜地思考","I"]]],
+      ["SN","觀察觸手的體色或吸盤紋路時，腦子裡主要想的是？",[["光線反射角度或顏色的精確細節","S"],["這花紋像遠海深處的哪種風景呢","N"],["觸摸時的觸感與表面質感","S"],["想象這隻觸手以後會成長為什麽模樣","N"]]],
+      ["TF","當別人說“你把觸手慣壞了”時：",[["反駁說按照標準和原則教育才是正確的","T"],["笑着說用自己的方式疼愛有什麽不好的","F"],["權衡客觀的養育數據和效率","T"],["溫柔地回應，以免傷害對方的感情","F"]]],
+      ["JP","改變觸手魚缸佈局時的風格是：",[["提前畫好草圖，按順序完美佈置","J"],["先擺放看看，如果不滿意就即興修改","P"],["喜歡根據規則整齊排列的結構","J"],["根據當時的心情享受自由佈局","P"]]],
+      ["EI","在有陌生人的社區里向大家炫耀你的觸手時：",[["主動積極地發照片並主導對話","E"],["靜靜地圍觀並享受其他人的反應","I"],["在熱鬧的氛圍中與大家交流","E"],["只跟幾個親近的朋友小範圍聊天","I"]]],
+      ["JP","當觸手表現出意料之外和平時不一樣的狀態時：",[["不慌不忙，按照手冊尋找原因和對策","J"],["先靈活地觀察情況並迎合它","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"準時敲門的近衛觸手",q:"距離約定時間還有3分鐘，已經在門前等候",d:"熱愛規律生活的可靠觸手。吃飯、散步、睡覺時間非常準確，一旦許下諾言就一定會遵守。",s:"按時叫醒、整理抽屜、提醒吃藥時間"},
+      ISFJ:{t:"溫暖包裹的毛毯觸手",q:"如果你看起來冷，它已經搭在你肩膀上了",d:"默默守候在身旁、細心照顧你的觸手。它能最先察覺你身體狀態的變化，並用溫暖包裹你。",s:"拍背撫摸、蓋被子、偷偷準備宵夜"},
+      INFJ:{t:"月光下低語的深海先知觸手",q:"不用開口就已經心領神會",d:"散發着神秘氣息，能看穿你內心深處的觸手。雖然有時會意味深長地晃動，但基本上都很準。",s:"感知心情、安慰的話語、深夜情感聊天搭子"},
+      INTJ:{t:"暗中佈局的戰略家觸手",q:"已經看穿了後面三步棋",d:"看起來很悠閒，但腦子裏總是在轉動着計劃。熱愛效率，甚至還在偷偷幫你規劃人生藍圖。",s:"日程優化、長期計劃設計、下棋與桌遊"},
+      ISTP:{t:"心靈手巧的萬能整修觸手",q:"話不多但動作極快",d:"雖然話少但在你需要時總會出現。壞掉的東西先摸摸看，修好之後才肯說一句話。",s:"組裝與修理、開瓶蓋、搬運重物"},
+      ISFP:{t:"穿梭珊瑚間的感性藝術觸手",q:"今天的顏色是柔和粉色",d:"感官細膩且自由奔放的觸手。遇到晚霞、音樂、陽光等美麗瞬間時，會默默陪在旁邊一起欣賞。",s:"畫畫、歌單策劃、欣賞晚霞"},
+      INFP:{t:"漂浮雲端的夢想家水母觸手",q:"想象力比現實更溫馨",d:"內心世界廣闊且情感細膩的觸手。當你感到辛苦時，它會像螢火蟲一樣在身旁默默發光陪伴。",s:"寫情感日記、看星星、一起深夜發呆"},
+      INTP:{t:"手拿燒瓶驗證假設的研究觸手",q:"爲什麽會這樣，先做個實驗再說",d:"好奇心永無止境的觸手。你隨口拋出的一個小問題就能讓它研究一整夜，不過記得餵它吃飯。",s:"科普冷知識、解謎、製作古怪發明"},
+      ESTP:{t:"踏浪前行的衝浪觸手",q:"先做了再說，想那麽多幹嘛",d:"充滿活力、行動敏捷的觸手。散步就是跑步，玩耍就是冒險，絕對能讓你的運動量大大增加。",s:"跑步搭子、轉換心情、應對危機"},
+      ESFP:{t:"聚光燈下起舞的派對觸手",q:"一登場就瞬間炒熱氣氛",d:"無論到哪裏都能成為焦點的可愛觸手。把你的平凡小家變成每天都充滿歡慶的小派對。",s:"舞蹈挑戰、自拍擺姿勢、派對主持"},
+      ENFP:{t:"如煙花般綻放的創意觸手",q:"宣佈今天的全新夢想",d:"充滿好奇心與熱情的觸手。一天能定五個計劃，其中三個已經開始執行了。收尾工作得靠你幫忙。",s:"靈感庫、啦啦隊長、發掘新愛好"},
+      ENTP:{t:"一言不合先反駁的辯論觸手",q:"自封為魔鬼代言人",d:"口才極佳且滿肚子惡作劇的觸手。為了好玩故意唱反調，但其實最享受和你聊天。",s:"辯論對手、狂轟濫炸的笑話、拋出刁鑽問題"},
+      ESTJ:{t:"維護秩序的紀律委員觸手",q:"今天的待辦清單核對過了嗎？",d:"責任心強且執行力極高的觸手。把你的日程和家規管理得井井有條，但其實受到表揚時最高興。",s:"日程管理、主持會議、大掃除總指揮"},
+      ESFJ:{t:"操心度滿級的照顧觸手",q:"吃飯了嗎？和誰一起吃的？",d:"重情義且擅長社交的觸手。連你身邊朋友的近況都要關心，努力為所有人創造歡樂的氛圍。",s:"分享小菜、生日驚喜、拓展人脈"},
+      ENFJ:{t:"指引方向的燈塔船長觸手",q:"我們一起走，我來帶路",d:"擁有溫暖領導力的觸手。堅信你的無限可能，給予無盡的鼓勵，最喜歡和你一起共同成長。",s:"激勵鼓舞、心理諮詢、活躍團隊氣氛"},
+      ENTJ:{t:"指揮深海的提督觸手",q:"目標是征服，在此之前先吃早餐",d:"兼具領袖氣質與行動力的觸手。運籌帷幄並衝在最前面，如果你想放棄，它會第一個挽起袖子。",s:"主導項目、談判、制定野心勃勃的計劃"}
+    }
+  },
+  es: {
+    bubble: "¿Llevateme?",
+    title: "Test de Personalidad<br>de Tentáculo",
+    desc: "Descubre la preferencia de tu propio tentáculo criado en maceta.",
+    goBtn: "Comenzar Test",
+    tags: ["10 Preguntas", "16 Resultados", "Nombre y MBTI"],
+    resKind: "Tu tentáculo compañero es",
+    mbtiLabel: "MBTI Estimado",
+    box1: "Sobre este tentáculo",
+    box2: "Habilidad especial",
+    box3: "Nombres recomendados",
+    btnGrow: "Crianza de Tentáculos",
+    shareBtn: "Compartir Resultado",
+    againBtn: "Intentar de nuevo",
+    toastCopy: "¡Resultado copiado!",
+    toastCancel: "Compartir cancelado",
+    q: [
+      ["EI","Al entrar a la habitación después del trabajo/escuela, ¿cuál es la primera reacción del tentáculo?",[["Pega firmemente sus ventosas al vidrio y te recibe emocionado","I"],["Te observa con solo sus ojos asomándose desde el escondite","E"],["Se eleva derecho tan pronto como escucha tu voz","E"],["Se despierta lentamente después de dormir en una bola acogedora","I"]]],
+      ["SN","Al alimentar a tu tentáculo, ¿qué te importa más?",[["Información nutricional y fecha de caducidad para satisfacción práctica","S"],["Un diseño visual fresco para refrescar su estado de ánimo hoy","N"],["La comida segura y familiar de siempre","S"],["Curiosidad por una historia misteriosa detrás de él","N"]]],
+      ["TF","Cuando el tentáculo tira y desordena accidentalmente un objeto del escritorio, tú:",[["Analizas primero la causa de por qué se movió así","T"],["Verificas si está lastimado y lo consuelas","F"],["Rediseñas la pecera para que esto no vuelva a pasar","T"],["Sonríes y lo dejas pasar pensando 'quería jugar'","F"]]],
+      ["JP","Al gestionar las rutinas del tentáculo (cambio de agua, alimentación):",[["Sigues el horario estricta y precisamente","J"],["Mantienes un marco flexible y te adaptas al estado diario","P"],["Creas una lista de tareas y terminas todo perfecto","J"],["Lo cuidas flexiblemente cuando te acuerdas","P"]]],
+      ["EI","Si pasas el fin de semana con tu tentáculo:",[["Un café animado o paseo al aire libre donde se reúne la gente","E"],["Un descanso acogedor y tranquilo solo entre ustedes dos","I"],["Explorar un lugar nuevo para recibir estímulos","E"],["Contemplación pacífica en la esquina de una habitación familiar","I"]]],
+      ["SN","Al observar el color o el patrón de las ventosas del tentáculo, piensas principalmente en:",[["Detalles precisos de los ángulos de reflexión de la luz o colores","S"],["¿A qué paisaje lejano de aguas profundas se parece este patrón?","N"],["La textura y sensación al tacto","S"],["Imaginar en qué forma futura crecerá este tentáculo","N"]]],
+      ["TF","Cuando la gente dice 'Mimas demasiado a tu tentáculo':",[["Argumentas que entrenar según normas y principios es correcto","T"],["Te ríes, diciendo qué tiene de malo apreciarlo a tu manera","F"],["Consideras los datos objetivos de crianza y eficiencia","T"],["Hablas suavemente para no lastimar los sentimientos del otro","F"]]],
+      ["JP","Al cambiar la disposición de la pecera del tentáculo, tu estilo es:",[["Bosquejar de antemano y organizar perfectamente en orden","J"],["Probar a colocar las cosas y cambiarlas improvisadamente si no te gusta","P"],["Preferir una estructura ordenada según reglas","J"],["Disfrutar de la colocación libre según tu estado de ánimo actual","P"]]],
+      ["EI","Al presumir de tu tentáculo compañero en una comunidad:",[["Subes fotos activamente primero y lideras la conversación","E"],["Disfrutas observando tranquilamente las reacciones de los demás","I"],["Te mezclas e interactúas con la gente en un ambiente animado","E"],["Hablas casualmente con solo unos pocos amigos cercanos","I"]]],
+      ["JP","Cuando el tentáculo muestra inesperadamente una condición inusual:",[["Calmidades buscas la causa y contramedida según el manual","J"],["Observas la situación con flexibilidad y te adaptas","P"]]]
+    ],
+    r: {
+      ISTJ:{t:"Tentáculo Guardia Puntual",q:"3 minutos antes de la cita, ya esperando en la puerta",d:"Un tentáculo confiable que ama la rutina. Los horarios de comida, paseo y sueño son estrictos y las promesas siempre se cumplen.",s:"Despertadores matutinos, organización de cajones, recordar horarios de medicamentos"},
+      ISFJ:{t:"Tentáculo Cobija Acogedora",q:"Si pareces tener frío, ya está sobre tus hombros",d:"Un tentáculo silencioso que vigila de cerca a tu lado. Nota primero los cambios en tu condición y te envuelve cálidamente.",s:"Palmaditas en la espalda, arropar con cobija, snacks nocturnos secretos"},
+      INFJ:{t:"Tentáculo Oráculo del Abismo",q:"Lo sabe todo sin que digas una palabra",d:"Exuda un aura misteriosa y mira directo a tus pensamientos internos. A veces se balancea con significado, y suele tener razón.",s:"Leer estados de ánimo, palabras de consuelo, charlas emocionales nocturnas"},
+      INTJ:{t:"Tentáculo Estratega Maestro",q:"Ya pensando tres pasos adelante",d:"Parece relajado, pero los planes siempre giran en su cabeza. Ama la eficiencia y traza en secreto tu mapa de vida.",s:"Optimización de horarios, planificación a largo plazo, ajedrez y juegos de mesa"},
+      ISTP:{t:"Tentáculo Reparador Práctico",q:"Pocas palabras, manos rápidas",d:"Callado pero aparece justo cuando se necesita. Toca las cosas rotas primero para revisar, y habla solo después de arreglarlas.",s:"Ensamblaje y reparación, abrir botellas, cargar objetos pesados"},
+      ISFP:{t:"Tentáculo Artístico Coralino",q:"El color de hoy es rosa pastel",d:"Sensible y de espíritu libre. Cuando llegan momentos hermosos como atardeceres, música o sol, los aprecia en silencio contigo.",s:"Dibujo, curación de listas de reproducción, ver atardeceres"},
+      INFP:{t:"Tentáculo Medusa Soñador",q:"La imaginación es más acogedora que la realidad",d:"Tiene un mundo interior amplio y un corazón tierno. Cuando la pasas mal, brilla en silencio como una luciérnaga a tu lado.",s:"Escribir diario emocional, ver las estrellas, mirar al vacío juntos"},
+      INTP:{t:"Tentáculo Investigador Científico",q:"Primero hay que experimentar por qué pasan las cosas",d:"Curiosidad sin fin. Una simple pregunta informal tuya lo mantiene investigando toda la noche, pero recuerda alimentarlo.",s:"Lanzamiento de datos curiosos, resolución de acertijos, construcción de inventos extraños"},
+      ESTP:{t:"Tentáculo Surfista de Olas",q:"Probemos primero y pensemos después",d:"Lleno de energía y rápido. Los paseos son carreras y el juego es aventura, aumentando definitivamente tu actividad diaria.",s:"Compañero para correr, cambio de humor, manejo de crisis"},
+      ESFP:{t:"Tentáculo Fiesta Estrella",q:"Cambia el ambiente al instante al llegar",d:"Un tentáculo adorable que se convierte en la estrella en todas partes. Convierte tu hogar ordinario en un mini-festival diario.",s:"Retos de baile, poses para selfies, anfitrión de reuniones"},
+      ENFP:{t:"Tentáculo Ideales de Fuego",q:"Anunciando el nuevo sueño de hoy",d:"Curioso y apasionado. Hace cinco planes al día y ya ha comenzado tres. Tienes que ayudar a terminar el resto.",s:"Banco de ideas, líder de porristas, descubrir nuevos pasatiempos"},
+      ENTP:{t:"Tentáculo Debate Abogado del Diablo",q:"Juega al abogado del diablo primero",d:"Ingenioso y lleno de travesuras. Toma posturas contrarias por diversión, pero en realidad es con quien más disfruta hablar.",s:"Compañero de debate, bombardeo de bromas, lanzar preguntas difíciles"},
+      ESTJ:{t:"Tentáculo Delegado de Disciplina",q:"¿Has revisado la lista de tareas de hoy?",d:"Fuerte sentido de responsabilidad e impulso. Gestiona meticulosamente tu horario y las reglas de la casa, pero le encanta que lo alaben.",s:"Gestión de tareas, facilitación de reuniones, mando de limpieza general"},
+      ESFJ:{t:"Tentáculo Cuidador Entrometido",q:"¿Comiste? ¿Con quién comiste?",d:"Cariñoso y sociable. Se preocupa incluso por el bienestar de tus conocidos para crear un ambiente alegre para todos.",s:"Compartir guarniciones, sorpresas de cumpleaños, conectar redes"},
+      ENFJ:{t:"Tentáculo Capitán Faro",q:"Vayamos juntos, yo guiaré el camino",d:"Posee un liderazgo cálido. Cree en tu potencial, te anima sin cesar y se alegra más de crecer juntos.",s:"Motivación, asesoramiento, creación de ambiente de equipo"},
+      ENTJ:{t:"Tentáculo Almirante del Océano",q:"La meta es la conquista, el desayuno es primero",d:"Carismático e impulsado. Dibuja el gran cuadro y toma la iniciativa; se remanga primero si intentas rendirte.",s:"Liderazgo de proyectos, negociación, planificación ambiciosa"}
+    }
+  }
+};
+
+let currentLang = "ko";
+let i=0, ans=[], cur="ISFP";
+
+const $=id=>document.getElementById(id);
+
+// 언어 변경 함수
+function changeLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  // 시작 화면 반영
+  $("bubble-txt").textContent = t.bubble;
+  $("title-txt").innerHTML = t.title;
+  $("desc-txt").textContent = t.desc;
+  $("go").textContent = t.goBtn;
+  
+  const tagsEl = $("tags-txt");
+  tagsEl.innerHTML = `<span>${t.tags[0]}</span><span>${t.tags[1]}</span><span>${t.tags[2]}</span>`;
+  
+  // 결과 화면 공통 반영
+  $("res-kind-txt").textContent = t.resKind;
+  $("mbti-label").textContent = t.mbtiLabel;
+  $("res-box1-title").textContent = t.box1;
+  $("res-box2-title").textContent = t.box2;
+  $("res-box3-title").textContent = t.box3;
+  $("btn-grow").textContent = t.btnGrow;
+  $("share").textContent = t.shareBtn;
+  $("again").textContent = t.againBtn;
+
+  // 퀴즈 진행 중일 경우 현재 문항 갱신
+  if (!$("#quiz").classList.contains("hide")) {
+    render();
+  } else if (!$("#result").classList.contains("hide")) {
+    finish(); // 결과 화면 내용 재번역
+  }
+}
+
+const show=id=>["start","quiz","result"].forEach(s=>$(s).classList.toggle("hide",s!==id));
+const heroPet=()=>$("hero").innerHTML=pet(rnd([340,200,270,150,30]),rnd(KINDS));
+
+function render(){
+  const Q = I18N[currentLang].q;
+  const [,txt,op]=Q[i];
+  $("cnt").textContent=(i+1)+" / "+Q.length;
+  $("qn").textContent="Q"+(i+1);
+  $("bar").style.width=((i+1)/Q.length*100)+"%";
+  $("qtext").textContent=txt;
+  const box=$("opts");box.innerHTML="";
+  op.forEach(([t,v])=>{
+    const b=document.createElement("button");b.className="opt";b.textContent=t;
+    b.onclick=()=>{b.classList.add("on");setTimeout(()=>pick(v),200)};
+    box.appendChild(b);
+  });
+}
+
+function pick(v){
+  const Q = I18N[currentLang].q;
+  ans.push([Q[i][0],v]);
+  i++;
+  i<Q.length?render():finish();
+}
+
+function finish(){
+  const sc={};ans.forEach(([,v])=>sc[v]=(sc[v]||0)+1);
+  cur=["EI","SN","TF","JP"].map(p=>(sc[p[0]]||0)>=(sc[p[1]]||0)?p[0]:p[1]).join("");
+  const rLang = I18N[currentLang].r[cur];
+  const rBase = R_base[cur]; // 색상 및 이름 고정값
+  
+  document.documentElement.style.setProperty("--h",rBase.h);
+  $("rt").textContent=rLang.t;
+  $("rq").textContent="“"+rLang.q+"”";
+  $("rm").textContent=cur;
+  $("rd").textContent=rLang.d;
+  $("rs").textContent=rLang.s;
+  $("rn").innerHTML=rBase.n.map(n=>'<span class="chip">'+n+'</span>').join("");
+  drawResult();show("result");window.scrollTo(0,0);
+}
+
+function drawResult(){
+  const rBase = R_base[cur];
+  $("rpet").innerHTML=pet(rBase.h,ACC[cur]);
+}
+
+// 언어별 변하지 않는 색상 및 고유 추천 이름 데이터
+const R_base = {
+  ISTJ:{h:215,n:["두부","콩이","밤이"]},
+  ISFJ:{h:25,n:["모찌","몽이","호두"]},
+  INFJ:{h:275,n:["달이","루나","미오"]},
+  INTJ:{h:255,n:["마루","로이","토리"]},
+  ISTP:{h:190,n:["쿠로","코코","하리"]},
+  ISFP:{h:320,n:["푸딩","모카","젤리"]},
+  INFP:{h:285,n:["솜이","구름","뭉이"]},
+  INTP:{h:165,n:["루미","타타","보노"]},
+  ESTP:{h:12,n:["치즈","탄이","레오"]},
+  ESFP:{h:50,n:["뽀삐","쿠키","망고"]},
+  ENFP:{h:335,n:["몽글","사탕","레몬"]},
+  ENTP:{h:130,n:["아몬드","푸푸","두리"]},
+  ESTJ:{h:235,n:["맥스","보배","도리"]},
+  ESFJ:{h:5,n:["밤톨","까미","뽀미"]},
+  ENFJ:{h:45,n:["소라","해랑","동이"]},
+  ENTJ:{h:355,n:["레이","몰리","타이"]}
+};
+
+const PL="#2f2445";
+const POTS=["#ffb3c7","#a9dcff","#ffe08a","#bfeab8","#d4bcff","#ffc9a3"];
+const POSES=[["M100 175 C 55 150,130 130,112 95 C 108 80,112 70,112 50",112,50],["M100 175 C 145 150,70 130,88 95 C 92 80,88 70,88 50",88,50],["M100 175 C 100 140,100 120,100 95 C 100 80,100 70,100 48",100,48],["M100 175 C 65 160,128 140,104 112 C 88 94,114 78,104 52",104,52]];
+const ACC={ISTJ:"glasses",ISFJ:"bow",INFJ:"wizard",INTJ:"crown",ISTP:"headphones",ISFP:"flower",INFP:"leaf",INTP:"glasses",ESTP:"headphones",ESFP:"party",ENFP:"flower",ENTP:"party",ESTJ:"crown",ESFJ:"bow",ENFJ:"leaf",ENTJ:"crown"};
+const KINDS=Object.values(ACC);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+let uid=0;
+function acc(k,ex,ey,fx,fy){
+  const st=`stroke="${PL}" stroke-width="2.6" stroke-linejoin="round"`;
+  if(k==="crown")return `<path d="M${ex-13} ${ey-12} l-2 -16 l9 8 l6 -12 l6 12 l9 -8 l-2 16z" fill="#ffd54a" ${st}/>`;
+  if(k==="bow"){const x=ex+15,y=ey-8;return `<path d="M${x} ${y} l-14 -9 v18z M${x} ${y} l14 -9 v18z" fill="#ff7fa5" ${st}/><circle cx="${x}" cy="${y}" r="3.5" fill="#ff5f8d" ${st}/>`;}
+  if(k==="glasses")return `<circle cx="${fx-9}" cy="${fy}" r="8" fill="#fff" fill-opacity=".4" stroke="${PL}" stroke-width="2.4"/><circle cx="${fx+9}" cy="${fy}" r="8" fill="#fff" fill-opacity=".4" stroke="${PL}" stroke-width="2.4"/><path d="M${fx-1} ${fy} h2" stroke="${PL}" stroke-width="2.4"/>`;
+  if(k==="headphones")return `<path d="M${fx-22} ${fy-4} Q${fx} ${ey-66} ${fx+22} ${fy-4}" fill="none" stroke="${PL}" stroke-width="4.5" stroke-linecap="round"/><rect x="${fx-28}" y="${fy-10}" width="10" height="17" rx="5" fill="#ff7fa5" ${st}/><rect x="${fx+18}" y="${fy-10}" width="10" height="17" rx="5" fill="#ff7fa5" ${st}/>`;
+  if(k==="flower"){const x=ex+13,y=ey-8;let p="";for(let i=0;i<5;i++){const a=i*1.2566;p+=`<circle cx="${x+Math.cos(a)*7}" cy="${y+Math.sin(a)*7}" r="5" fill="#ff9ec0" stroke="${PL}" stroke-width="1.8"/>`}return p+`<circle cx="${x}" cy="${y}" r="4" fill="#ffd54a" stroke="${PL}" stroke-width="1.8"/>`;}
+  if(k==="party")return `<path d="M${ex-14} ${ey-12} L${ex} ${ey-46} L${ex+14} ${ey-12}z" fill="#7fd1ff" ${st}/><circle cx="${ex}" cy="${ey-47}" r="4.5" fill="#ffd54a" ${st}/><circle cx="${ex-4}" cy="${ey-24}" r="2" fill="#fff"/><circle cx="${ex+4}" cy="${ey-32}" r="2" fill="#ff7fa5"/>`;
+  if(k==="leaf")return `<path d="M${ex} ${ey-16} q-19 -1 -21 -20 q19 0 21 20z" fill="#7edc9a" ${st}/><path d="M${ex} ${ey-16} q19 -1 21 -20 q-19 0 -21 20z" fill="#9be8b0" ${st}/>`;
+  if(k==="wizard")return `<path d="M${ex-16} ${ey-10} L${ex+3} ${ey-54} L${ex+16} ${ey-10}z" fill="#6a58c9" ${st}/><ellipse cx="${ex}" cy="${ey-10}" rx="23" ry="5.5" fill="#6a58c9" ${st}/><circle cx="${ex+1}" cy="${ey-28}" r="2.5" fill="#ffd54a"/>`;
+  return "";
+}
+function pet(h,k){
+  const [d,ex,ey]=rnd(POSES),pc=rnd(POTS),pat=rnd(["dots","stripes","hearts"]),eye=rnd(["dot","happy"]),mouth=rnd(["smile","open"]),id="c"+(uid++);
+  const fx=ex,fy=ey+22,body=`hsl(${h} 80% 70%)`;
+  const E=x=>eye==="dot"?`<g class="eye"><circle cx="${x}" cy="${fy}" r="4" fill="${PL}"/><circle cx="${x+1.2}" cy="${fy-1.4}" r="1.3" fill="#fff"/></g>`:`<path d="M${x-4} ${fy+2} Q${x} ${fy-5} ${x+4} ${fy+2}" fill="none" stroke="${PL}" stroke-width="2.6" stroke-linecap="round"/>`;
+  const M=mouth==="smile"?`<path d="M${fx-3.5} ${fy+7} Q${fx} ${fy+11} ${fx+3.5} ${fy+7}" fill="none" stroke="${PL}" stroke-width="2.2" stroke-linecap="round"/>`:`<path d="M${fx-4} ${fy+6} Q${fx} ${fy+15} ${fx+4} ${fy+6}z" fill="#ff6f91" stroke="${PL}" stroke-width="2" stroke-linejoin="round"/>`;
+  const P={dots:'<circle cx="82" cy="202" r="3.5" fill="#fff" opacity=".8"/><circle cx="118" cy="202" r="3.5" fill="#fff" opacity=".8"/><circle cx="100" cy="217" r="3.5" fill="#fff" opacity=".8"/>',
+    stripes:'<path d="M82 186 L85 228 M100 186 V230 M118 186 L115 228" stroke="#fff" stroke-width="4.5" opacity=".7" stroke-linecap="round"/>',
+    hearts:'<text x="100" y="212" font-size="24" text-anchor="middle" fill="#fff" opacity=".85">♥</text>'}[pat];
+  const sp=`<text x="30" y="${50+Math.random()*30}" font-size="18" fill="#ffd54a" stroke="${PL}" stroke-width="0.8">✦</text><text x="165" y="${110+Math.random()*30}" font-size="15" fill="#ff9ec0" stroke="${PL}" stroke-width="0.8">✦</text>`;
+  return `<svg viewBox="0 0 200 250" role="img" aria-label="화분에 심어진 귀여운 촉수">${sp}
+  <ellipse cx="100" cy="240" rx="50" ry="6.5" fill="${PL}" opacity=".15"/>
+  <defs><clipPath id="${id}"><rect x="0" y="${ey+46}" width="200" height="140"/></clipPath></defs>
+  <g class="sway"><path d="${d}" fill="none" stroke="${PL}" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="${d}" fill="none" stroke="${body}" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="${d}" fill="none" stroke="hsl(${h} 100% 90%)" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.1 16" clip-path="url(#${id})"/>
+  <ellipse cx="${fx-15}" cy="${fy+7}" rx="5" ry="3" fill="#ff7fa5" opacity=".5"/><ellipse cx="${fx+15}" cy="${fy+7}" rx="5" ry="3" fill="#ff7fa5" opacity=".5"/>
+  ${E(fx-9)}${E(fx+9)}${M}${acc(k,ex,ey,fx,fy)}</g>
+  <path d="M60 178 L68 228 Q69 233 75 233 L125 233 Q131 233 132 228 L140 178z" fill="${pc}" stroke="${PL}" stroke-width="3.5" stroke-linejoin="round"/>${P}
+  <rect x="52" y="160" width="96" height="22" rx="9" fill="${pc}" stroke="${PL}" stroke-width="3.5"/><path d="M64 168 H90" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></svg>`;
+}
+
+$("go").onclick=()=>{i=0;ans=[];show("quiz");render()};
+$("again").onclick=()=>{document.documentElement.style.setProperty("--h",340);heroPet();show("start");window.scrollTo(0,0)};
+$("share").onclick=async()=>{
+  const rLang = I18N[currentLang].r[cur];
+  const t = I18N[currentLang];
+  const text=`${t.resKind} 「${rLang.t}」 (${cur}) — ${t.box3}: ${R_base[cur].n[0]}\n`+location.href;
+  try{ if(navigator.share){await navigator.share({title:"반려 촉수 테스트",text});return} await navigator.clipboard.writeText(text);toast(t.toastCopy) }catch(e){toast(t.toastCancel)}
+};
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800)}
+heroPet();
+</script>
+</body>
+</html>
